@@ -1,16 +1,40 @@
 # flutter_task
 
-A new Flutter project.
+# 🔥 Flutter Firebase File Management App
 
-## Getting Started
+A Flutter application demonstrating Firebase Authentication, file upload to Firebase Storage (images and PDFs), and real-time download & preview functionality — built with clean architecture and state management using **Provider**.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 📱 Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### ✅ Authentication
+- User Sign In / Sign Up with Firebase Authentication
+- Input validation (email, strong password with uppercase, lowercase, number & special character)
+- SnackBar feedback for errors and success
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 📁 File Upload & Management
+- Upload **images** or **PDFs** to Firebase Storage after login
+- Track **upload progress** in real time
+- List uploaded files with:
+  - 🔍 **Preview** button:
+    - Resized preview for images
+    - Native PDF viewer for PDFs
+  - ⬇️ **Download** button:
+    - Resized image download with gallery save
+    - PDF download with appropriate success message
+
+### 🖼️ Image Resizing
+- Images are resized to predefined dimensions before being previewed or downloaded (ensuring performance and consistency)
+
+### 👤 Sign Out
+- Secure Firebase logout functionality
+
+### 🗂️ State Management
+- Used **Provider** for managing state cleanly
+- Separation of business logic and UI for better scalability and maintainability
+
+---
+
+## 📂 Folder Structure
+
