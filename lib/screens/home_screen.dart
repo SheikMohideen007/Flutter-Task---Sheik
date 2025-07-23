@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Map<String, dynamic>> uploadedFiles = [];
+  bool data = false;
   bool isLoading = false;
   double uploadProgress = 0.0;
   double downloadProgress = 0.0;
@@ -29,7 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadFiles() async {
     final storageService = StorageService();
     uploadedFiles = await storageService.listFiles();
-    setState(() {});
+    setState(() {
+      data = true;
+    });
   }
 
   Future<void> uploadFile() async {
@@ -184,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final devHeight = MediaQuery.of(context).size.height;
     final buttonSize = devWidth * 0.16;
     final previewSize = devWidth * 0.6;
-
+    print('Uploaded files: $uploadedFiles...$data');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -208,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: uploadedFiles.isEmpty
+      body: data == false
           ? const Center(child: Text('Loading...'))
           : Stack(
               children: [
@@ -217,48 +220,59 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       SizedBox(height: devHeight * 0.03),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: uploadedFiles.length,
-                          itemBuilder: (context, index) {
-                            final file = uploadedFiles[index];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Card(
-                                elevation: 8,
-                                child: ListTile(
-                                  leading: Icon(
-                                    file['type'] == 'image'
-                                        ? Icons.image
-                                        : Icons.picture_as_pdf,
-                                    size: 40,
-                                  ),
-                                  title: Text(file['name'] ?? ''),
-                                  trailing: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.download),
-                                        onPressed: () =>
-                                            downloadFile(file['url']),
-                                      ),
-                                      file['type'] == 'image'
-                                          ? IconButton(
-                                              icon: const Icon(
-                                                  Icons.remove_red_eye),
-                                              onPressed: () =>
-                                                  openPreviewScreen(
-                                                      file['url']),
-                                            )
-                                          : const SizedBox(),
-                                    ],
-                                  ),
+                      uploadedFiles.isEmpty
+                          ? const Expanded(
+                              child: Center(
+                                child: Text(
+                                  'No Images & Pdf are available to see',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black54),
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                itemCount: uploadedFiles.length,
+                                itemBuilder: (context, index) {
+                                  final file = uploadedFiles[index];
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: Card(
+                                      elevation: 8,
+                                      child: ListTile(
+                                        leading: Icon(
+                                          file['type'] == 'image'
+                                              ? Icons.image
+                                              : Icons.picture_as_pdf,
+                                          size: 40,
+                                        ),
+                                        title: Text(file['name'] ?? ''),
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              icon: const Icon(Icons.download),
+                                              onPressed: () =>
+                                                  downloadFile(file['url']),
+                                            ),
+                                            file['type'] == 'image'
+                                                ? IconButton(
+                                                    icon: const Icon(
+                                                        Icons.remove_red_eye),
+                                                    onPressed: () =>
+                                                        openPreviewScreen(
+                                                            file['url']),
+                                                  )
+                                                : const SizedBox(),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                       SizedBox(height: devHeight * 0.03),
                     ],
                   ),
