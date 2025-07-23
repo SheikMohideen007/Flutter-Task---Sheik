@@ -37,4 +37,11 @@ A Flutter application demonstrating Firebase Authentication, file upload to Fire
 ---
 
 ## 📂 Folder Structure
-
+lib/
+├── auth/ # Authentication (login/register)
+├── models/ # File model
+├── screens/ # UI Screens (Home, Preview, Auth)
+├── services/ # Firebase services (auth, storage)
+├── utils/ # Validators, helpers, exception handling
+├── main.dart # App entry point
+├── firebase_options.dart # Firebase config (auto-generated)
